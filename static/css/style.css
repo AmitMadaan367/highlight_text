@@ -8361,3 +8361,40 @@ img.logo {
 nav#sidebar h1 a.logo {
     font-size: 15px;
 }
+
+.input-full input {
+    width: 100%;
+    padding: 10px;
+}
+.input-full select {
+    width: 100%;
+    padding: 10px;
+}
+.main-form {
+    padding: 23px;
+}
+.setting_btn{
+  font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    background-color: #50758a;
+    width: 44%;
+    padding: 7px;
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.setting_hide{
+  text-align: left;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 30px;
+    margin-top: 10px;
+}
+.hide{
+display: none !important;
+}

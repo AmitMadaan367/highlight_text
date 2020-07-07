@@ -42,8 +42,8 @@ class signupform(forms.Form):
     def clean_Password(self):
         data=self.cleaned_data.get('Password')
         print(data)
-        if len(data)<6:
-            raise forms.ValidationError("password length must be 10")
+        if len(data)<8:
+            raise forms.ValidationError("password length must be 8")
         return data
 
     def clean_Email(self):

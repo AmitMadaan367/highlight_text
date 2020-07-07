@@ -1,6 +1,5 @@
-
-
-
+<!DOCTYPE html>
+<html>
 
 
 <!doctype html>
@@ -11,13 +10,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    
+    <link href="https://harvesthq.github.io/chosen/chosen.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
-  </head>
-  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
     
-    <div class="wrapper d-flex align-items-stretch">
+    
+    
+ 
+    
+    
+    <script>
+        $(document).ready(function(){
+            $('.setting_btn').click(function(){
+                $('.settingData').toggleClass('hide');
+            });
+        });
+
+      document.getElementById('output').innerHTML = location.search;
+      $(".chosen-select").chosen();
+    </script>
+</head>
+
+
+
+<body>
+
+<div class="wrapper d-flex align-items-stretch">
       <nav id="sidebar" class="active">
         <h1><a href='https://dynamic.brandcrowd.com/asset/logo/59608730-f769-44cc-8d3c-712e883cfe7a/logo?v=4&text=Highlight+Text' class="logo">Highlight Text</a></h1>
         <ul class="list-unstyled components mb-5">
@@ -72,19 +93,131 @@
     {% csrf_token %}
         <label class="col-md-6 control-label">
 
+
+  
+  
+
+
+
 <h1>Upload Excel file</h1>
+
+    <div class="user_pod" >
+      <h3>  {{file}}</h3>
+    </div>
+
 </label>
     <div class="form-group">
 
 <label class="col-md-2 control-label">
-<input type="file" name="fileToUpload" id="fileToUpload">
+<input type="file" name="fileToUpload" id="fileToUpload" value="{{file}}">
 </label>
         <div class="col-md-6">
                 </div>
     </div>
+<div class="main-button-section">
+
+
+
+
+<input type="submit" value="Read file"  name="read" class="btn btn-primary">
 
   
-    <input type="submit" value="Upload" class="btn btn-primary">
+    </div>
+
+
+    <div class="top-main-form">
+<div class="main-form">
+
+  {% if data %}
+<h2 class="setting_btn">Setting</h2>
+{% endif %}
+<div class="settingData hide">
+<h2 class="setting_hide">Validation Criteria</h2>
+<div class="main-form-flex input-full">
+
+<label>Columns: </label>
+<div id="output">
+
+  <select id="cars" name="col">
+     {%for i in data%}
+  <option value="{{i}}">{{i}}</option>
+   {% endfor %}
+  
+</select>
+
+
+
+</div>
+  
+</div>
+<div class="main-inner-flex input-full">
+<label>Allow:</label>
+
+
+<div class="selection">
+      <select>
+  <option>Whole Number</option>
+  <option>Decimal Number</option>
+  </select>
+  <!-- <div class="check-box"> <input type="checkbox" id="black2" name="black2" value="ignore">
+  <label for="black2"> Ignore Black</label></div> -->
+    
+    </div>
+
+    
+</div>
+
+<div class="main-inner-flex main-inner-flex-2 input-full">
+<label>Data:</label>
+<div class="selection">
+      <select name="inc">
+  <option>include</option>
+  <option>exclude</option>
+  
+  </select>
+    
+    </div>
+
+    
+</div>
+<div class="main-inner-flex main-inner-flex-2 input-full">
+<label>Minimum:</label>
+<div class="selection">
+<input type="number" id="quantity" name="min" min="1" max="5">
+    
+    </div>
+
+    
+</div>
+
+<div class="main-inner-flex main-inner-flex-2 input-full">
+<label>Maximum:</label>
+<div class="selection input-full">
+ <input type="number" id="quantity" name="max" min="1" max="5">
+    
+    </div>
+
+    
+</div>
+<div class="main-button-section">
+<div class="clear-btn">
+
+
+
+<input type="submit" value="Upload" name="show"  class="btn btn-primary">
+
+</div>
+
+</div>
+
+
+
+
+</div>
+
+</div>
+</div>
+</div>
 </form>
     </div>
     <div class="amit1">
@@ -95,15 +228,9 @@
     <script src="/static/js/popper.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/main.js"></script>
+    
+
   </body>
 
 
-
-
-
-
-
-
-
-
-
+</html>
