@@ -15,6 +15,13 @@ def index(request):
     return render(request, 'index.html')
 
 def userdash(request):
+    if request.method == 'POST':
+        print("amitaaaaaaaaaaaaaaaaaaaaaaaaa")
+        excel_file = request.FILES["fileToUpload"]
+        print(excel_file,'fileeeeeeeeeeeeeee')
+        df=pd.read_csv(excel_file)
+        print(df)
+        return HttpResponse(df.to_html())
     return render(request, 'userdashboard.html')
 
 # def signup_page(request):
@@ -79,6 +86,12 @@ def signup_page(request):
 
 
 def login_user(request):
+    if request.user.is_authenticated:
+        print("Logged in")
+        return redirect("/userdash/")
+    else:
+        print("Not logged in")
+
     if request.method == 'POST':
         form = loginform(request.POST)
         if form.is_valid():
@@ -124,13 +137,7 @@ def user_logout(request):
 
 
 def read(request):
-    if request.method == 'GET':
-        print("amitaaaaaaaaaaaaaaaaaaaaaaaaa")
-        excel_file = request.FILES["fileToUpload"]
-        print(excel_file,'fileeeeeeeeeeeeeee')
-        df=pd.read_csv('file')
-        print(df)
-        return HttpResponse(df.to_html())
+    
     return redirect("/userdash/")
 
 
