@@ -11,46 +11,63 @@ from django.contrib.auth.models import User
 from ab.forms import *
 
 import pandas as pd
+
 import numpy
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 def index(request):
     return render(request, 'index.html')
+amit=None
+amit1=None
 
+@login_required
 def userdash(request):
+    global amit, amit1
     if request.method == 'POST':
         if request.POST.get("read"):
             print('amitaaaaaaaaaaaaa')
             excel_file = request.FILES["fileToUpload"]
-
             print(type(excel_file),"excel_fileexcel_fileexcel_fileexcel_file")
             print(excel_file,"excel_fileexcel_fileexcel_fileexcel_fileexcel_file")
             print(excel_file,'fileeeeeeeeeeeeeee')
-            df=pd.read_excel(excel_file)
+            excel_test=str(excel_file)
+            if excel_test[-1]=="s" and excel_test[-2]=="l" and excel_test[-3]=="x":
+                df=pd.read_excel(excel_file)
+            if excel_test[-1]=="v" and excel_test[-2]=="s" and excel_test[-3]=="c":
+                df=pd.read_csv(excel_file)
+            try:
+                if excel_test[-1]=="x" and excel_test[-2]=="s" and excel_test[-3]=="l" and excel_test[-4]=="x":
+                    df=pd.read_excel(excel_file)
+            except:
+                pass
+            amit=df
             print(df)
             print(df)
             data_top = df.columns
             data_top=list(data_top)
             print("headers",data_top)
 
-            return render(request, 'userdashboard.html',{"data":data_top,'file':excel_file})
+            return render(request, 'userdashboard.html',{"data":data_top,'file':excel_file,"work":False})
         if request.POST.get("show"):
             column_names=[]
-            excel_file = request.FILES["fileToUpload"]
-            col = request.POST["col"]
-            column_names.append(str(col))
+            # excel_file = request.FILES["fileToUpload"]
+            column_names = request.POST.getlist("col")
+
+            print(type(column_names),column_names,"colcolcolcolcolcolcolcolcol")
             inc = request.POST["inc"]
             mi = request.POST["min"]
             mx = request.POST["max"]
-            print(excel_file,'fileeeeeeeeeeeeeee')
-            data=pd.read_excel(excel_file)
-            nums = [10.0,5.0,7.0,5.0,4.0,2.0,numpy.nan,7.0,9.0]
+            # print(excel_file,'fileeeeeeeeeeeeeee')
+            # data=pd.read_excel(excel_file)
+            data=amit
             index_col=[]
             for i in range(len(data)):
                 index_col.append(i)
-            data.insert(0,'index_abxyz',index_col)    
-            data['random'] = nums
+            try:
+                data.insert(0,'index_abxyz',index_col)   
+            except:
+                pass 
             print(data)
             data_copy = data.copy()
             def settings_view(data):
@@ -235,10 +252,10 @@ def userdash(request):
                             total_unhighlighted = 0
                             for v in dict_graph.values():
                                 total_highlighted+=v[0]
-                                total_unhighlighted+=v[1]
+                                # total_unhighlighted+=v[1]
                     #         print(f'{total_highlighted}  {total_unhighlighted}')
-                            dict_graph.update({'total_highlighted':total_highlighted})
-                            dict_graph.update({'total_unhighlighted':total_unhighlighted})
+                            total_unhighlighted = len(data)*len(data.columns)-len(data)-total_highlighted #first get all values in data then subtract one additional row we added then subt total highlighted
+                            dict_graph.update({'total':[total_highlighted,total_unhighlighted]})
                             for k in dict_graph:
                                 dict_graph[k] -= 1
                     except:
@@ -251,50 +268,13 @@ def userdash(request):
                 data_copy.hide_columns(subset='index_abxyz')# this is bruteforce column we don't want to see it
                 return data_copy,dict_graph
             data_copy,dict_graph = settings_view(data)
-            # print(data_copy)
+            
+            amit1=dict_graph
+            # plr=data_copy.set_table_attributes('class="pure-table"')
+            # return render(request, 'show.html',{"plr":plr})
+            return HttpResponse("<p></p><span class='span-graph' style='margin-left: 107px'><a class='show-graph' href='/showimage/' style='font-weight: 600; text-transform: capitalize; letter-spacing: 2px; font-size: 24px; background-color: #50758a; padding: 7px 24px; text-decoration :none;color: white; border-radius: 8px; cursor: pointer;'>Show graph</a></span> <div class='table-data' style='margin-top:20px;'>"+data_copy.render()+"</div>")
 
-            return HttpResponse(data_copy.render())
-    return render(request, 'userdashboard.html')
-
-# def signup_page(request):
-#   if request.method == 'POST':
-#       usename = request.POST['u-name']
-#       password = request.POST['psw']
-#       email = request.POST['email']
-#       fname = request.POST['f-name']
-#       lname = request.POST['l-name']
-#       data=[fname,lname,email,usename,password]
-#       if password and usename:
-#           try:
-        
-#               user = User.objects.create_user(username=usename, password=password,email=email,first_name=fname,last_name=lname)
-#               r = user.save()
-        
-#               if r is None:
-#                   return HttpResponse('45')
-#           except: 
-#               return render(request,'signup.html',{'data':data})
-#       else:
-#         print("create_user does not contain fields")
-#         return render(request,'registration_form.html')
-
-#   return render(request,'signup.html')
-
-
-# def login_user(request):
-#   if request.method != 'POST':
-#       return render(request,'signin.html')
-#   username = request.POST['js']
-#   password = request.POST['aak']
-#   user  = authenticate(username=username.lower(), password=password)
-#   if user is not None:
-#       if user.is_active:
-#           login(request, user)
-#           return HttpResponse('successfully login')
-#       else:
-#           return HttpResponse("Your account is disabled.")
-#   else:
-#       return redirect('/register/')
+    return render(request, 'userdashboard.html',{"work":"True"})
 
 
 
@@ -314,6 +294,8 @@ def signup_page(request):
         form = signupform()
         print("notdshksfdhjsdfhsdfahlsafd")
     return render(request,'signup.html',{"form":form})
+
+
 
 
 
@@ -371,6 +353,50 @@ def user_logout(request):
 def read(request):
     
     return redirect("/userdash/")
+
+
+
+
+
+from io import BytesIO
+import base64
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def showimage(request):
+    global amit1
+    data5=[]
+    dict_graph=amit1
+    for i,key in enumerate(dict_graph):
+        if i==0:
+            continue
+    #     print(dict_graph[key])    
+        plt.figure(figsize=(7,7))
+        plt.pie(dict_graph[key],labels=[key+'\nhighlighted',key+'\nunhighlighted'],shadow=True,autopct='%1.1f%%');
+    #     print(key)
+    #     g.show()
+        if key == 'total':
+            print("yes")
+            plt.title('Total HighLighted v/s Total UnHighLighted')
+        else:
+            print("no")
+            plt.title(f'{key.capitalize()} HighLighted v/s {key.capitalize()} UnHighLighted')
+
+
+        buffer = BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+
+        graphic = base64.b64encode(image_png)
+        graphic = graphic.decode('utf-8')
+        data5.append(graphic)
+    return render(request, 'show.html',{'data5':data5})
+
+
+
 
 
 

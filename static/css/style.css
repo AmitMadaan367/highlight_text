@@ -8398,3 +8398,48 @@ nav#sidebar h1 a.logo {
 .hide{
 display: none !important;
 }
+ul.dropdown-menu.show {
+    transform: translate3d(0px, 0px, 0px) !important;
+    top: 37px !important;
+    width: 72% !important;
+}
+div#output ul {
+    padding: 0;
+}
+li.dropdown {
+    list-style: none;
+    border: 1px solid;
+    width: 100%;
+    padding: 10px;
+}a.dropdown-toggle {
+    padding: 4px;
+    color: black;
+}
+
+
+
+
+.amit input.btn.btn-primary {
+   margin: 20px auto;
+   display: block;
+   border-radius: 20px;
+}
+#output a.dropdown-toggle {
+   display: block;
+}
+#output li.dropdown {
+   padding: 0;
+}
+#output li.dropdown a.dropdown-toggle {
+   padding: 10px;
+}
+#output li.dropdown li .checkbox label {
+   width: 100%;
+}
+#output li.dropdown li .checkbox label input[type="checkbox"] {
+   width: auto;
+   margin-right: 10px;
+}
+#output li.dropdown li {
+   padding: 0px 15px;
+}

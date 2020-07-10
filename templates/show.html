@@ -97,162 +97,13 @@
 <div  class='amit'>
 
 
-        <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% if file == None %}
-        <label class="col-md-6 control-label">
+<div class="content_js">
 
-
-  <h1>Upload Excel file</h1>
-
-    <div class="user_pod" >
-      <h3>  {{file}}</h3>
-    </div>
-
-</label>
-
-    <div class="form-group">
-
-<label class="col-md-2 control-label">
-<input type="file" name="fileToUpload" id="fileToUpload" value="{{file}}" required>
-</label>
-        <div class="col-md-6">
-                </div>
-    </div>
-<div class="main-button-section">
-
-
-
-
-<input type="submit" value="Read file"  name="read" class="btn btn-primary">
-</div>
-{% endif %}
-
-    
-
-    <div class="top-main-form">
-<div class="main-form">
-
-
-
-  {% if data %}
-<h2 class="setting_btn">Setting</h2>
-{% endif %}
-
-
-
-{% if work == False %}
-<div class="settingData hide">
-<h2 class="setting_hide">Validation Criteria</h2>
-<div class="main-form-flex input-full">
-
-<label>Columns: </label>
-<div id="output">
-
-
-    <ul>
-        <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Click me and select columns<b class="caret"></b></a>
-            <ul class="dropdown-menu" >
-              {%for i in data%}
-                <li>
-                    <div class="checkbox">
-                      
-                        <label>
-
-                            <input type="checkbox" value="{{i}}" name="col">{{i}}
-                        </label>
-                     
-                    </div>
-                </li>
-                   {% endfor %}
-            </ul>
-        </li>
-            </ul>
-
-
-  
-
-</div>
-  
-</div>
-<div class="main-inner-flex input-full" required>
-<label>Allow:</label>
-
-
-<div class="selection">
-      <select>
-  <option>Whole Number</option>
-  <option>Decimal Number</option>
-  </select>
-  <!-- <div class="check-box"> <input type="checkbox" id="black2" name="black2" value="ignore">
-  <label for="black2"> Ignore Black</label></div> -->
-    
-    </div>
-
-    
+	{% for i in data5 %}
+<img src="data:image/png;base64,{{ i|safe }}">
+{% endfor %}
 </div>
 
-<div class="main-inner-flex main-inner-flex-2 input-full">
-<label>Data:</label>
-<div class="selection">
-      <select name="inc" required>
-  <option>include</option>
-  <option>exclude</option>
-  
-  </select>
-    
-    </div>
-
-    
-</div>
-<div class="main-inner-flex main-inner-flex-2 input-full">
-<label>Minimum:</label>
-<div class="selection">
-<input type="number" id="quantity" name="min" required>
-    
-    </div>
-
-    
-</div>
-
-<div class="main-inner-flex main-inner-flex-2 input-full">
-<label>Maximum:</label>
-<div class="selection input-full">
- <input type="number" id="quantity" name="max" required>
-    
-    </div>
-
-    
-</div>
-<div class="main-button-section">
-<div class="clear-btn">
-
-
-<input type="submit" value="Upload" name="show"  class="btn btn-primary" id="submit">
-<div>
-
-</div>
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-{% if work == False %}
-
-</div>
-</div>
-</div>
-
-{% endif %}
-
-</form>
- <div class="amit1">
-      <img src="/static/images/login-user.png" alt="Italian Trulli">
-    </div>
     </div>
    
 </div>
@@ -282,3 +133,8 @@
 
 
 </html>
+
+
+        
+
+
