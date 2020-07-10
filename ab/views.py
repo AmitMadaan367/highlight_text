@@ -11,19 +11,19 @@ from django.contrib.auth.models import User
 from ab.forms import *
 
 import pandas as pd
-
 import numpy
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 def index(request):
     return render(request, 'index.html')
-amit=None
-amit1=None
+
+data=None
+dict_graph=None
 
 @login_required
 def userdash(request):
-    global amit, amit1
+    global dict_graph, data
     if request.method == 'POST':
         if request.POST.get("read"):
             print('amitaaaaaaaaaaaaa')
@@ -41,7 +41,7 @@ def userdash(request):
                     df=pd.read_excel(excel_file)
             except:
                 pass
-            amit=df
+            data=df
             print(df)
             print(df)
             data_top = df.columns
@@ -60,7 +60,6 @@ def userdash(request):
             mx = request.POST["max"]
             # print(excel_file,'fileeeeeeeeeeeeeee')
             # data=pd.read_excel(excel_file)
-            data=amit
             index_col=[]
             for i in range(len(data)):
                 index_col.append(i)
@@ -269,7 +268,7 @@ def userdash(request):
                 return data_copy,dict_graph
             data_copy,dict_graph = settings_view(data)
             
-            amit1=dict_graph
+            
             # plr=data_copy.set_table_attributes('class="pure-table"')
             # return render(request, 'show.html',{"plr":plr})
             return HttpResponse("<p></p><span class='span-graph' style='margin-left: 107px'><a class='show-graph' href='/showimage/' style='font-weight: 600; text-transform: capitalize; letter-spacing: 2px; font-size: 24px; background-color: #50758a; padding: 7px 24px; text-decoration :none;color: white; border-radius: 8px; cursor: pointer;'>Show graph</a></span> <div class='table-data' style='margin-top:20px;'>"+data_copy.render()+"</div>")
@@ -365,9 +364,8 @@ import numpy as np
 
 
 def showimage(request):
-    global amit1
+    global dict_graph
     data5=[]
-    dict_graph=amit1
     for i,key in enumerate(dict_graph):
         if i==0:
             continue
